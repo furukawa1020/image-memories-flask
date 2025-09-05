@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>しらみね大学村</title>
+    <style>
+        #image-container {
+            text-align: center;
+            margin-top: 20%;
+        }
+        #form-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img id="intro-image" src="{{ url_for('static', filename='images/images1.png') }}" alt="しらみね大学村">
+    </div>
+
+    <div id="form-container">
+        <form action="/" method="POST">
+            <label for="name">名前:</label>
+            <input type="text" id="name" name="name" required>
+            <br><br>
+            <label for="date">日付:</label>
+            <input type="date" id="date" name="date" required>
+            <br><br>
+            <input type="submit" value="送信">
+        </form>
+    </div>
+
+    <script>
+        // 3秒後に画像を非表示にし、フォームを表示
+        setTimeout(function() {
+            document.getElementById('intro-image').style.display = 'none';
+            document.getElementById('form-container').style.display = 'block';
+        }, 3000);
+    </script>
+</body>
+</html>

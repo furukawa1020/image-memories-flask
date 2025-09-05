@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>履歴</title>
+</head>
+<body>
+    <h1>入力履歴</h1>
+
+    <h2>名前の入力回数</h2>
+    <ul>
+        {% for name, count in name_count.items() %}
+            <li>{{ name }}: {{ count }}回</li>
+        {% else %}
+            <li>まだ誰も入力していません。</li>
+        {% endfor %}
+    </ul>
+
+    <h2>今日の入力履歴</h2>
+    <ul>
+        {% for entry in today_entries %}
+            <li>{{ entry.name }} - {{ entry.date }} (今日)</li>
+        {% else %}
+            <li>今日の入力はありません。</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{{ url_for('index') }}">戻る</a>
+</body>
+</html>
