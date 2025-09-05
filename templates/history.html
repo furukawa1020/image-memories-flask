@@ -21,12 +21,32 @@
     <h2>今日の入力履歴</h2>
     <ul>
         {% for entry in today_entries %}
-            <li>{{ entry.name }} - {{ entry.date }} (今日)</li>
+            <li>
+                {{ entry.name }} - {{ entry.date }} (今日)
+                {% if entry.image %}
+                    <br>
+                    <img src="{{ url_for('static', filename='images/' ~ entry.image) }}" alt="{{ entry.image }}" style="width:100px;">
+                {% endif %}
+            </li>
         {% else %}
             <li>今日の入力はありません。</li>
         {% endfor %}
     </ul>
 
+    <h2>全履歴</h2>
+    <ul>
+        {% for entry in history %}
+            <li>
+                {{ entry.name }} - {{ entry.date }}
+                {% if entry.image %}
+                    <br>
+                    <img src="{{ url_for('static', filename='images/' ~ entry.image) }}" alt="{{ entry.image }}" style="width:100px;">
+                {% endif %}
+            </li>
+        {% else %}
+            <li>履歴はありません。</li>
+        {% endfor %}
+    </ul>
     <br>
     <a href="{{ url_for('index') }}">戻る</a>
 </body>

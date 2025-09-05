@@ -1,29 +1,30 @@
 from flask import Flask, render_template, request, redirect, url_for
+import os
 from datetime import datetime
 
 app = Flask(__name__)
 
-# 名前と日付を保存するリスト
+static_image_dir = os.path.join('static', 'images')
+# 名前・日付・画像ファイル名を保存するリスト
 history_data = []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # static/images/配下の画像一覧を取得
+    images = [f for f in os.listdir(static_image_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+
     if request.method == 'POST':
-        # フォームから名前と日付を取得
         name = request.form.get('name')
         date = request.form.get('date')
-
-        # 入力が空でないかを確認
-        if name and date:
-            # データを保存
-            history_data.append({'name': name, 'date': date})
+        image = request.form.get('image')
+        if name and date and image:
+            history_data.append({'name': name, 'date': date, 'image': image})
             return redirect(url_for('view_history'))
 
-    return render_template('index.html')
+    return render_template('index.html', images=images)
 
 @app.route('/history')
 def view_history():
-    # 同じ名前の人の入力回数をカウント
     name_count = {}
     for entry in history_data:
         name = entry['name']
@@ -32,7 +33,6 @@ def view_history():
         else:
             name_count[name] = 1
 
-    # 今日の日付に入力されたデータを取得
     today = datetime.now().strftime('%Y-%m-%d')
     today_entries = [entry for entry in history_data if entry['date'] == today]
 

@@ -19,7 +19,12 @@
 </head>
 <body>
     <div id="image-container">
-        <img id="intro-image" src="{{ url_for('static', filename='images/images1.png') }}" alt="しらみね大学村">
+        <h2>画像を選んでください</h2>
+        <div>
+            {% for image in images %}
+                <img src="{{ url_for('static', filename='images/' ~ image) }}" alt="{{ image }}" style="width:150px; margin:10px; cursor:pointer;" onclick="selectImage('{{ image }}')">
+            {% endfor %}
+        </div>
     </div>
 
     <div id="form-container">
@@ -30,16 +35,20 @@
             <label for="date">日付:</label>
             <input type="date" id="date" name="date" required>
             <br><br>
+            <input type="hidden" id="image" name="image" required>
+            <div id="selected-image-preview"></div>
             <input type="submit" value="送信">
         </form>
     </div>
 
     <script>
-        // 3秒後に画像を非表示にし、フォームを表示
-        setTimeout(function() {
-            document.getElementById('intro-image').style.display = 'none';
+        // 画像を選択したらフォームを表示し、選択画像をhiddenにセット
+        function selectImage(imageName) {
+            document.getElementById('image-container').style.display = 'none';
             document.getElementById('form-container').style.display = 'block';
-        }, 3000);
+            document.getElementById('image').value = imageName;
+            document.getElementById('selected-image-preview').innerHTML = '<img src="/static/images/' + imageName + '" style="width:150px;">';
+        }
     </script>
 </body>
 </html>
